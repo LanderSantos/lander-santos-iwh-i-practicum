@@ -9,17 +9,19 @@ html
       a.logo(href="/") Movies<span>DB</span>
       a.nav-link(href="/") Return to the homepage
     main
-      h1 Add a Movie
-      p.subtitle Fill in the details to add a new movie to HubSpot CRM
+      h1= movie ? 'Edit Movie' : 'Add a Movie'
+      p.subtitle= movie ? 'Update the details of this movie in HubSpot CRM' : 'Fill in the details to add a new movie to HubSpot CRM'
       .form-card
         form(action="/update-cobj", method="POST")
+          if movie
+            input(type="hidden", name="id", value=movie.id)
           .form-group
             label(for="name") Name
-            input(type="text", id="name", name="name", placeholder="e.g. Inception", required)
+            input(type="text", id="name", name="name", placeholder="e.g. Inception", value=movie ? movie.properties.name : '', required)
           .form-group
             label(for="director") Director
-            input(type="text", id="director", name="director", placeholder="e.g. Christopher Nolan", required)
+            input(type="text", id="director", name="director", placeholder="e.g. Christopher Nolan", value=movie ? movie.properties.director : '', required)
           .form-group
             label(for="release_year") Release Year
-            input(type="text", id="release_year", name="release_year", placeholder="e.g. 2010", required)
-          input(type="submit", value="Add Movie")
+            input(type="text", id="release_year", name="release_year", placeholder="e.g. 2010", value=movie ? movie.properties.release_year : '', required)
+          input(type="submit", value=movie ? 'Save Changes' : 'Add Movie')

@@ -29,20 +29,48 @@ app.get('/', async (req, res) => {
     }
 });
 
-// ROUTE 2 - Show the form to add a new movie
-app.get('/update-cobj', (req, res) => {
-    res.render('updates', { title: 'Update Custom Object Form | Integrating With HubSpot I Practicum' });
+// ROUTE 2 - Show form (add new OR edit existing)
+app.get('/update-cobj', async (req, res) => {
+    const { id } = req.query;
+    let movie = null;
+
+    if (id) {
+        try {
+            const resp = await axios.get(
+                `${BASE_URL}/crm/v3/objects/${OBJECT_TYPE_ID}/${id}?properties=name,director,release_year`,
+                { headers }
+            );
+            movie = resp.data;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    res.render('updates', {
+        title: 'Update Custom Object Form | Integrating With HubSpot I Practicum',
+        movie
+    });
 });
 
-// ROUTE 3 - Create a new movie record and redirect to homepage
+// ROUTE 3 - Create or update a movie record, then redirect to homepage
 app.post('/update-cobj', async (req, res) => {
-    const { name, director, release_year } = req.body;
-    const newMovie = {
-        properties: { name, director, release_year }
-    };
-    const url = `${BASE_URL}/crm/v3/objects/${OBJECT_TYPE_ID}`;
+    const { id, name, director, release_year } = req.body;
+    const properties = { name, director, release_year };
+
     try {
-        await axios.post(url, newMovie, { headers });
+        if (id) {
+            await axios.patch(
+                `${BASE_URL}/crm/v3/objects/${OBJECT_TYPE_ID}/${id}`,
+                { properties },
+                { headers }
+            );
+        } else {
+            await axios.post(
+                `${BASE_URL}/crm/v3/objects/${OBJECT_TYPE_ID}`,
+                { properties },
+                { headers }
+            );
+        }
         res.redirect('/');
     } catch (error) {
         console.error(error);
