@@ -5,14 +5,21 @@ html
     meta(name="viewport" content="width=device-width, initial-scale=1")
     link(rel="stylesheet", href="/css/style.css")
   body
-    a(href="/") Return to the homepage
-    h1 Add a Movie
-    .form-wrapper
-      form(action="/update-cobj", method="POST")
-        label(for="name") Name
-        input(type="text", id="name", name="name", required)
-        label(for="director") Director
-        input(type="text", id="director", name="director", required)
-        label(for="release_year") Release Year
-        input(type="text", id="release_year", name="release_year", required)
-        input(type="submit", value="Submit")
+    nav
+      a.logo(href="/") Movies<span>DB</span>
+      a.nav-link(href="/") Return to the homepage
+    main
+      h1 Add a Movie
+      p.subtitle Fill in the details to add a new movie to HubSpot CRM
+      .form-card
+        form(action="/update-cobj", method="POST")
+          .form-group
+            label(for="name") Name
+            input(type="text", id="name", name="name", placeholder="e.g. Inception", required)
+          .form-group
+            label(for="director") Director
+            input(type="text", id="director", name="director", placeholder="e.g. Christopher Nolan", required)
+          .form-group
+            label(for="release_year") Release Year
+            input(type="text", id="release_year", name="release_year", placeholder="e.g. 2010", required)
+          input(type="submit", value="Add Movie")

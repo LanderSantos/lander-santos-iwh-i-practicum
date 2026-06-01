@@ -5,17 +5,28 @@ html
     meta(name="viewport" content="width=device-width, initial-scale=1")
     link(rel="stylesheet", href="/css/style.css")
   body
-    h1 Movies Table
-    a(href="/update-cobj") Add to this table
-    table
-      thead
-        tr
-          th Name
-          th Director
-          th Release Year
-      tbody
-        each movie in data
-          tr
-            td #{movie.properties.name}
-            td #{movie.properties.director}
-            td #{movie.properties.release_year}
+    nav
+      a.logo(href="/") Movies<span>DB</span>
+      a.nav-link(href="/update-cobj") + Add Movie
+    main
+      h1 Movie Collection
+      p.subtitle All movies stored in HubSpot CRM
+      .table-wrapper
+        table
+          thead
+            tr
+              th Name
+              th Director
+              th Release Year
+          tbody
+            if data.length === 0
+              tr
+                td(colspan="3")
+                  .empty No movies yet. Add one!
+            else
+              each movie in data
+                tr
+                  td #{movie.properties.name}
+                  td #{movie.properties.director}
+                  td
+                    span.badge #{movie.properties.release_year}
