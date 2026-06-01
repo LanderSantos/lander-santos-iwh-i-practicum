@@ -6,20 +6,33 @@ html
     link(rel="stylesheet", href="/css/style.css")
   body
     nav
-      a.logo(href="/") Movies<span>DB</span>
-      a.nav-link(href="/") Return to the homepage
-    main
+      a.logo(href="/")
+        .logo-icon 🎬
+        span.logo-text Movies<span>DB</span>
+      a.btn.btn-ghost(href="/") ← Return to the homepage
+
+    .form-hero
       h1 Add a Movie
-      p.subtitle Fill in the details to add a new movie to HubSpot CRM
+      p Fill in the details to create a new record in HubSpot CRM
+
+    .form-container
       .form-card
         form(action="/update-cobj", method="POST")
           .form-group
-            label(for="name") Name
-            input(type="text", id="name", name="name", placeholder="e.g. Inception", required)
+            label
+              span Name
+              span.required-dot
+            input(type="text", name="name", placeholder="e.g. Inception", required)
           .form-group
-            label(for="director") Director
-            input(type="text", id="director", name="director", placeholder="e.g. Christopher Nolan", required)
+            label
+              span Director
+              span.required-dot
+            input(type="text", name="director", placeholder="e.g. Christopher Nolan", required)
           .form-group
-            label(for="release_year") Release Year
-            input(type="text", id="release_year", name="release_year", placeholder="e.g. 2010", required)
-          input(type="submit", value="Add Movie")
+            label
+              span Release Year
+              span.required-dot
+            input(type="text", name="release_year", placeholder="e.g. 2010", required)
+          button.submit-btn(type="submit") Add Movie to HubSpot
+
+    footer Powered by HubSpot CRM API
