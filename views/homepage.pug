@@ -6,21 +6,12 @@ html
     link(rel="stylesheet", href="/css/style.css")
   body
     nav
-      a.logo(href="/")
-        .logo-icon 🎬
-        span.logo-text Movies<span>DB</span>
-      a.btn.btn-primary(href="/update-cobj") + Add Movie
-
-    .hero
-      .hero-label ✦ HubSpot CRM
-      h1 Your <span>Movie</span> Collection
-      p All your custom object records, synced live from HubSpot.
-
-    .stats-bar
-      p.stats-info Showing <strong>#{data.length}</strong> movie#{data.length !== 1 ? 's' : ''}
-
+      a.logo(href="/") Movies<span>DB</span>
+      a.nav-link(href="/update-cobj") + Add Movie
     main
-      .table-card
+      h1 Movie Collection
+      p.subtitle All movies stored in HubSpot CRM
+      .table-wrapper
         table
           thead
             tr
@@ -31,19 +22,11 @@ html
             if data.length === 0
               tr
                 td(colspan="3")
-                  .empty-state
-                    .empty-icon 🎬
-                    p No movies yet. Add your first one!
+                  .empty No movies yet. Add one!
             else
               each movie in data
                 tr
+                  td #{movie.properties.name}
+                  td #{movie.properties.director}
                   td
-                    span.movie-name #{movie.properties.name}
-                  td
-                    .director-cell
-                      .director-avatar #{movie.properties.director ? movie.properties.director.charAt(0).toUpperCase() : '?'}
-                      span #{movie.properties.director || '—'}
-                  td
-                    span.badge #{movie.properties.release_year || '—'}
-
-    footer Powered by HubSpot CRM API
+                    span.badge #{movie.properties.release_year}
