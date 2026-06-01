@@ -5,31 +5,33 @@ html
     meta(name="viewport" content="width=device-width, initial-scale=1")
     link(rel="stylesheet", href="/css/style.css")
   body
-    nav
-      a.logo(href="/") Movies<span>DB</span>
-      a.nav-link(href="/update-cobj") + Add Movie
-    main
-      h1 Movie Collection
-      p.subtitle All movies stored in HubSpot CRM
-.table-wrapper
-        table
-          thead
-            tr
-              th Name
-              th Director
-              th Release Year
-              th
-          tbody
-            if data.length === 0
+    .app-card
+      nav
+        a.logo(href="/") Movies<span>DB</span>
+        a.nav-link(href="/update-cobj") + Add Movie
+      .card-body
+        h1 Movie Collection
+        p.subtitle All your movies, synced live from HubSpot CRM
+        .table-wrapper
+          table
+            thead
               tr
-                td(colspan="4")
-                  .empty No movies yet. Add one!
-            else
-              each movie in data
+                th Name
+                th Director
+                th Release Year
+                th
+            tbody
+              if data.length === 0
                 tr
-                  td #{movie.properties.name}
-                  td #{movie.properties.director}
-                  td
-                    span.badge #{movie.properties.release_year}
-                  td
-                    a.edit-btn(href=`/update-cobj?id=${movie.id}`) Edit
+                  td(colspan="4")
+                    .empty No movies yet. Add one!
+              else
+                each movie in data
+                  tr
+                    td #{movie.properties.name}
+                    td #{movie.properties.director}
+                    td
+                      span.badge #{movie.properties.release_year}
+                    td
+                      a.edit-btn(href=`/update-cobj?id=${movie.id}`) Edit
+      footer Powered by HubSpot CRM API
